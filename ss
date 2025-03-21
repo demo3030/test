@@ -1,20 +1,23 @@
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-dependency-plugin</artifactId>
-    <version>3.5.0</version>
+    <artifactId>maven-antrun-plugin</artifactId>
+    <version>3.0.0</version>
     <executions>
         <execution>
-            <id>copy-dependencies</id>
+            <id>copy-custom-libs</id>
             <phase>process-resources</phase>
             <goals>
-                <goal>copy-dependencies</goal>
+                <goal>run</goal>
             </goals>
             <configuration>
-                <outputDirectory>${project.build.outputDirectory}/lib</outputDirectory>
-                <overWriteReleases>false</overWriteReleases>
-                <overWriteSnapshots>false</overWriteSnapshots>
-                <overWriteIfNewer>true</overWriteIfNewer>
-                <includeScope>runtime</includeScope>
+                <target>
+                    <mkdir dir="${project.build.outputDirectory}/lib" />
+                    <copy todir="${project.build.outputDirectory}/lib">
+                        <fileset dir="${project.basedir}/src/main/resources/lib">
+                            <include name="**/*.jar" />
+                        </fileset>
+                    </copy>
+                </target>
             </configuration>
         </execution>
     </executions>
