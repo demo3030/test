@@ -1,12 +1,9 @@
-style.css
+ <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.test:*</include>
+                                </includes>
+                            </artifactSet>
 
-.p-field label,
-.form-field label,
-.p-col label,
-th {
-  font-weight: bold !important;
-}
-
-
-
-Release Request -> Clear Search
+                        </configuration>
