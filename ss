@@ -11,26 +11,13 @@
             <configuration>
                 <shadedArtifactAttached>true</shadedArtifactAttached>
                 <shadedClassifierName>all</shadedClassifierName>
-                <filters>
-                    <filter>
-                        <artifact>*:*</artifact>
-                        <excludes>
-                            <exclude>META-INF/*.SF</exclude>
-                            <exclude>META-INF/*.DSA</exclude>
-                            <exclude>META-INF/*.RSA</exclude>
-                        </excludes>
-                    </filter>
-                </filters>
                 <transformers>
-                    <!-- Include the target/lib JARs inside the final fat JAR under /lib -->
+                    <!-- Copy external JARs from target/lib into /lib inside the fat JAR -->
                     <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                        <resource>
-                            <directory>${project.build.directory}/lib</directory>
-                            <includes>**/*.jar</includes>
-                            <target>/lib/</target>
-                        </resource>
+                        <resource>lib</resource>
+                        <file>${project.build.directory}/lib</file>
                     </transformer>
-                    <!-- Ensure Manifest has the correct Main-Class -->
+                    <!-- Ensure the Main-Class is correctly set -->
                     <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                         <mainClass>your.main.Class</mainClass>
                     </transformer>
