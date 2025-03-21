@@ -1,27 +1,20 @@
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-shade-plugin</artifactId>
-    <version>3.2.4</version>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>3.5.0</version>
     <executions>
         <execution>
-            <phase>package</phase>
+            <id>copy-dependencies</id>
+            <phase>process-resources</phase>
             <goals>
-                <goal>shade</goal>
+                <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-                <shadedArtifactAttached>true</shadedArtifactAttached>
-                <shadedClassifierName>all</shadedClassifierName>
-                <transformers>
-                    <!-- Copy external JARs from target/lib into /lib inside the fat JAR -->
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                        <resource>lib</resource>
-                        <file>${project.build.directory}/lib</file>
-                    </transformer>
-                    <!-- Ensure the Main-Class is correctly set -->
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>your.main.Class</mainClass>
-                    </transformer>
-                </transformers>
+                <outputDirectory>${project.build.outputDirectory}/lib</outputDirectory>
+                <overWriteReleases>false</overWriteReleases>
+                <overWriteSnapshots>false</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+                <includeScope>runtime</includeScope>
             </configuration>
         </execution>
     </executions>
