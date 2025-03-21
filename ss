@@ -1,24 +1,28 @@
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-antrun-plugin</artifactId>
-    <version>3.0.0</version>
-    <executions>
-        <execution>
-            <id>copy-custom-libs</id>
-            <phase>process-resources</phase>
-            <goals>
-                <goal>run</goal>
-            </goals>
-            <configuration>
-                <target>
-                    <mkdir dir="${project.build.outputDirectory}/lib" />
-                    <copy todir="${project.build.outputDirectory}/lib">
-                        <fileset dir="${project.basedir}/src/main/resources/lib">
-                            <include name="**/*.jar" />
-                        </fileset>
-                    </copy>
-                </target>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+    <id>custom-assembly</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <fileSets>
+        <!-- Include main JAR -->
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory>/lib</outputDirectory>
+            <includes>
+                <include>${project.artifactId}-${project.version}.jar</include>
+            </includes>
+        </fileSet>
+
+        <!-- Include JARs from src/main/resources/lib -->
+        <fileSet>
+            <directory>src/main/resources/lib</directory>
+            <outputDirectory>/lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
